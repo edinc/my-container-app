@@ -1,0 +1,27 @@
+name: Azure Container Apps Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Build App
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '3.1.x'
+      - run: dotnet build ${{ github.workspace }}/src
+
+      - name: Build and deploy Container App
+        uses: azure/container-apps-deploy-action@v0
+        with:
+          appSourcePath: ${{ github.workspace }}/src
+          acrName: ca5073ee2144acr.azurecr.io
+          containerAppName: my-container-app
+          resourceGroup: actions-demo-rg
