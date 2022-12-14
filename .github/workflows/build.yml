@@ -1,4 +1,4 @@
-name: Azure Container Apps Build and Deploy
+name: Azure Container Apps Build
 
 on:
   workflow_dispatch:
