@@ -11,6 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: build
 
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +21,13 @@ jobs:
         with:
           dotnet-version: '3.1.x'
       - run: dotnet build ${{ github.workspace }}/src
-      
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: deploy
+    needs: [build]
+
+    steps:
       - name: Log in to Azure
         uses: azure/login@v1
         with:
